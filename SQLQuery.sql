@@ -78,5 +78,59 @@ INSERT INTO ResponseTable (formId, questionId, answerId) VALUES (2, 6, 1); -- He
 INSERT INTO ResponseTable (formId, questionId, answerId) VALUES (2, 7, 1); -- Excellent culture
 INSERT INTO ResponseTable (formId, questionId, answerId) VALUES (2, 8, NULL); -- Suggestions: "More team-building activities."
 
+drop procedure CopyFormIntoTable
+
+create procedure CopyFormIntoTable @formId int , @newFormId INT OUTPUT
+as 
+begin
+		DECLARE @formName VARCHAR(100);
+		-- Get the form name to copy
+		SELECT @formName = formName
+		FROM FormTable
+		WHERE formId = @formId;
+		-- Create a copy of the form
+        INSERT INTO FormTable (formName, createdDate)
+        VALUES ('Copy of' + @formName, GETDATE());
+		 -- Get the new form ID
+        SET @newFormId = SCOPE_IDENTITY();
+		-- Create a temporary table to hold new question IDs
+        CREATE TABLE #NewQuestions (
+            OldQuestionId INT,
+            NewQuestionId INT
+        );
+        -- Copy the questions
+        INSERT INTO QuestionTable (questionDesc, questionType, formId)
+        SELECT questionDesc, questionType, @newFormId
+        FROM QuestionTable
+        WHERE formId = @formId;
+        -- Get the new question IDs and their corresponding old IDs
+        INSERT INTO #NewQuestions (OldQuestionId, NewQuestionId)
+        SELECT q.questionId, qNew.questionId
+        FROM QuestionTable q
+        INNER JOIN QuestionTable qNew ON q.questionDesc = qNew.questionDesc AND q.questionType = qNew.questionType
+        WHERE qNew.formId = @newFormId AND q.formId = @formId;
+		INSERT INTO AnswerTable (questionId, answerOption, answerDesc)
+        SELECT n.NewQuestionId, a.answerOption, a.answerDesc
+        FROM AnswerTable a
+        INNER JOIN #NewQuestions n ON a.questionId = n.OldQuestionId;
+end
+
+
+DECLARE @newFormId INT;
+
+EXEC CopyFormIntoTable @formId = 1, @newFormId = @newFormId OUTPUT;
+
+SELECT @newFormId AS NewFormId;
+
 
 select * from FormTable;
+select * from QuestionTable;
+select * from AnswerTable;
+select * from AnswerTable;
+
+SELECT f.formId, f.formName, f.createdDate, q.questionId, q.questionDesc, q.questionType, a.answerId, a.answerOption, a.answerDesc
+FROM FormTable f
+INNER JOIN QuestionTable q ON f.formId = q.formId
+Left JOIN AnswerTable a ON q.questionId = a.questionId
+WHERE f.formId = 14;
+
