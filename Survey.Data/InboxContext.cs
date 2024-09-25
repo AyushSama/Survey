@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Survey.Data.DBEntities;
-using System.Collections.Generic;
 
 namespace Survey.Data
 {
