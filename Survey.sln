@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey", "Survey\Survey.csproj", "{2AA01516-80B8-4AEC-A24F-B19F9D63139D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey", "Survey\Survey.csproj", "{2AA01516-80B8-4AEC-A24F-B19F9D63139D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Data", "Survey.Data\Survey.Data.csproj", "{CBDB1C00-93D4-4488-8B75-CBD0C90E699A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey.Data", "Survey.Data\Survey.Data.csproj", "{CBDB1C00-93D4-4488-8B75-CBD0C90E699A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Application", "Survey.Application\Survey.Application.csproj", "{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey.Application", "Survey.Application\Survey.Application.csproj", "{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Model", "Survey.Model\Survey.Model.csproj", "{D574E87D-E805-4C8B-9338-C17ACE46CD2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

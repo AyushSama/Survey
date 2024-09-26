@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Survey.Application.BusinessInterfaces;
+using Survey.Application.BusinessServices;
 using Survey.Data;
 using System.Text;
 
@@ -12,6 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<IFormTableService,FormTableService>();
+//builder.Services.AddScoped<IQuestionTableService, QuestionTableService>();
+//builder.Services.AddScoped<IAnswerTableService, AnswerTableService>();
+//builder.Services.AddScoped<IResponseTableService, ResponseTableService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -77,7 +85,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContextPool<InboxContext>(options =>
-    options.UseSqlServer("Server=172.16.1.90;uid=TTA2024;pwd=Rizvi@2024;database=RizviTTA;TrustServerCertificate=True;", sqloptions =>
+    options.UseSqlServer("Server=AyushSama\\SQLEXPRESS;Database=tta_dev;Trusted_Connection=True;TrustServerCertificate=True;", sqloptions =>
     {
         sqloptions.CommandTimeout(5);
     }));

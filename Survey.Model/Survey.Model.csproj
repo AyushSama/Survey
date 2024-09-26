@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Survey.Data\Survey.Data.csproj" />
-    <ProjectReference Include="..\Survey.Model\Survey.Model.csproj" />
   </ItemGroup>
 
 </Project>

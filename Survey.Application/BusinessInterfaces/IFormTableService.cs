@@ -1,6 +1,9 @@
-﻿namespace Survey.Application.BusinessInterfaces
+﻿using Survey.Model;
+
+namespace Survey.Application.BusinessInterfaces
 {
-    public class IFormTableService
+    public interface IFormTableService
     {
+        public FormModel getForm(int formId);
     }
 }

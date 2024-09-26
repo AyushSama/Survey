@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Survey.Application\Survey.Application.csproj" />
     <ProjectReference Include="..\Survey.Data\Survey.Data.csproj" />
   </ItemGroup>
 
