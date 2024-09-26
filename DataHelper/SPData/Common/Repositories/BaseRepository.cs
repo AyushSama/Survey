@@ -208,7 +208,7 @@ namespace DataHelper.SPData.Common.Repositories
             List<T> Rows = new();
             try
             {
-                using SqlConnection con = new(GetConnectionString());
+                using SqlConnection con = new("Server=AyushSama\\SQLEXPRESS;Database=tta_dev;Trusted_Connection=True;TrustServerCertificate=True;");
                 using SqlCommand cmd = new(_spName, con);
                 con.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
