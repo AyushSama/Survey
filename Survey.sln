@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey.Data", "Survey.Data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey.Application", "Survey.Application\Survey.Application.csproj", "{860516FA-4CC1-43D6-963B-96C2B0A0DDE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Model", "Survey.Model\Survey.Model.csproj", "{D574E87D-E805-4C8B-9338-C17ACE46CD2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survey.Model", "Survey.Model\Survey.Model.csproj", "{D574E87D-E805-4C8B-9338-C17ACE46CD2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataHelper", "DataHelper\DataHelper.csproj", "{EF7ECF82-8B05-442B-BF14-359823398DF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D574E87D-E805-4C8B-9338-C17ACE46CD2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF7ECF82-8B05-442B-BF14-359823398DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF7ECF82-8B05-442B-BF14-359823398DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF7ECF82-8B05-442B-BF14-359823398DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF7ECF82-8B05-442B-BF14-359823398DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

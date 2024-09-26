@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Survey.Application.BusinessInterfaces;
 using Survey.Model;
 
@@ -13,20 +12,22 @@ namespace Survey.Controllers
         //private readonly IAnswerTableService _answerTableService;
         //private readonly IQuestionTableService _questionTableService;
         private readonly IFormTableService _formTableService;
+        private readonly ICopyFormIntoTableProc _copyFormIntoTableProc;
         //IAnswerTableService answerTableService, IQuestionTableService questionTableService,
-        public FormController( IFormTableService formTableService)
+        public FormController(IFormTableService formTableService, ICopyFormIntoTableProc copyFormIntoTableProc)
         {
             //_answerTableService = answerTableService;
             //_questionTableService = questionTableService;
             _formTableService = formTableService;
+            _copyFormIntoTableProc = copyFormIntoTableProc;
         }
 
 
         [HttpGet("GetForm")]
-        public IActionResult GetForm(int formId) 
+        public IActionResult GetForm(int formId)
         {
             var list = _formTableService.getForm(formId);
-            return Ok(new {form = list});
+            return Ok(new { form = list });
         }
 
         [HttpPost("InsertForm")]
@@ -34,6 +35,14 @@ namespace Survey.Controllers
         {
             var list = _formTableService.insertForm(form);
             return Ok(new { form = list });
+        }
+
+
+        [HttpGet("ExecuteCopyForm")]
+        public IActionResult ExecuteCopyForm(int formId)
+        {
+            var list = _copyFormIntoTableProc.ExecuteProcedure(formId);
+            return Ok(new { list });
         }
     }
 }
