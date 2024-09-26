@@ -80,40 +80,64 @@ INSERT INTO ResponseTable (formId, questionId, answerId) VALUES (2, 8, NULL); --
 
 drop procedure CopyFormIntoTable
 
-create procedure CopyFormIntoTable @formId int , @newFormId INT OUTPUT
-as 
-begin
-		DECLARE @formName VARCHAR(100);
-		-- Get the form name to copy
-		SELECT @formName = formName
-		FROM FormTable
-		WHERE formId = @formId;
-		-- Create a copy of the form
-        INSERT INTO FormTable (formName, createdDate)
-        VALUES ('Copy of' + @formName, GETDATE());
-		 -- Get the new form ID
-        SET @newFormId = SCOPE_IDENTITY();
-		-- Create a temporary table to hold new question IDs
-        CREATE TABLE #NewQuestions (
-            OldQuestionId INT,
-            NewQuestionId INT
-        );
-        -- Copy the questions
+CREATE PROCEDURE CopyFormIntoTable
+    @formId INT,
+    @newFormId INT OUTPUT
+AS
+BEGIN
+    DECLARE @formName VARCHAR(100);
+    DECLARE @oldQuestionId INT;
+    DECLARE @newQuestionId INT;
+    DECLARE @questionDesc NVARCHAR(MAX);
+    DECLARE @questionType VARCHAR(10);
+
+    -- Get the form name to copy
+    SELECT @formName = formName
+    FROM FormTable
+    WHERE formId = @formId;
+
+    -- Create a copy of the form
+    INSERT INTO FormTable (formName, createdDate)
+    VALUES ('Copy of ' + @formName, GETDATE());
+
+    -- Get the new form ID
+    SET @newFormId = SCOPE_IDENTITY();
+
+    -- Declare a cursor for iterating through the questions
+    DECLARE QuestionCursor CURSOR FOR
+    SELECT questionId, questionDesc, questionType
+    FROM QuestionTable
+    WHERE formId = @formId;
+
+    OPEN QuestionCursor;
+
+    -- Fetch the first question from the cursor
+    FETCH NEXT FROM QuestionCursor INTO @oldQuestionId, @questionDesc, @questionType;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Insert the question into the new form
         INSERT INTO QuestionTable (questionDesc, questionType, formId)
-        SELECT questionDesc, questionType, @newFormId
-        FROM QuestionTable
-        WHERE formId = @formId;
-        -- Get the new question IDs and their corresponding old IDs
-        INSERT INTO #NewQuestions (OldQuestionId, NewQuestionId)
-        SELECT q.questionId, qNew.questionId
-        FROM QuestionTable q
-        INNER JOIN QuestionTable qNew ON q.questionDesc = qNew.questionDesc AND q.questionType = qNew.questionType
-        WHERE qNew.formId = @newFormId AND q.formId = @formId;
-		INSERT INTO AnswerTable (questionId, answerOption, answerDesc)
-        SELECT n.NewQuestionId, a.answerOption, a.answerDesc
-        FROM AnswerTable a
-        INNER JOIN #NewQuestions n ON a.questionId = n.OldQuestionId;
-end
+        VALUES (@questionDesc, @questionType, @newFormId);
+
+        -- Get the new question ID
+        SET @newQuestionId = SCOPE_IDENTITY();
+
+        -- Copy the answers for the current question
+        INSERT INTO AnswerTable (questionId, answerOption, answerDesc)
+        SELECT @newQuestionId, answerOption, answerDesc
+        FROM AnswerTable
+        WHERE questionId = @oldQuestionId;
+
+        -- Fetch the next question
+        FETCH NEXT FROM QuestionCursor INTO @oldQuestionId, @questionDesc, @questionType;
+    END;
+
+    -- Close and deallocate the cursor
+    CLOSE QuestionCursor;
+    DEALLOCATE QuestionCursor;
+END;
+
 
 
 DECLARE @newFormId INT;
